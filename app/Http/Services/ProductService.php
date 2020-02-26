@@ -22,15 +22,17 @@ class ProductService
         return Product::create($data);
     }
 
-    public function update(Product $product, array $data)
+    public function update(array $data, $id)
     {
+        $product = Product::find($id);
         $product->fill($data);
         $product->save();
         return $product;
     }
 
-    public function destroy(Product $product)
+    public function destroy($id)
     {
+        $product = Product::find($id);
         $product->delete();
         return response()->json([
             'success' => 'El producto ha sido eliminado'

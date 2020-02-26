@@ -20,9 +20,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('products/get-products-in-cart', 'Api\ProductController@getProductsInCart');
 Route::get('products/{id}', 'Api\ProductController@find');
 Route::get('products', 'Api\ProductController@index');
-
 Route::post('products/add-to-cart', 'Api\ProductController@addToCart');
 Route::post('products/remove-from-cart', 'Api\ProductController@removeFromCart');
 Route::post('products/remove-and-update-products', 'Api\ProductController@removeAndUpdateProducts');
+
+Route::post('products', 'Api\Admin\ProductController@store');
+Route::put('products/{id}', 'Api\Admin\ProductController@update');
+Route::delete('products/{product}', 'Api\Admin\ProductController@delete');
 
 Route::apiResource('users', 'Api\UserController');

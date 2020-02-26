@@ -2204,12 +2204,115 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ProductView',
   data: function data() {
     return {
-      products: []
+      products: [],
+      // product: '',
+      product: {
+        'name': '',
+        'description': '',
+        'price': ''
+      },
+      messageStatusProduct: ''
     };
   },
   methods: {
@@ -2221,6 +2324,69 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.log(err);
       });
+    },
+    openDeleteModal: function openDeleteModal(product) {
+      this.product = product;
+    },
+    createProductModal: function createProductModal() {
+      this.messageStatusProduct = 'Guardar';
+    },
+    editProductModal: function editProductModal(product) {
+      this.product = product;
+      this.messageStatusProduct = 'Actualizar';
+    },
+    createProduct: function createProduct() {
+      var _this2 = this;
+
+      axios.post(_config__WEBPACK_IMPORTED_MODULE_0__["apiHost"] + 'products/', {
+        'name': this.product.name,
+        'description': this.product.description,
+        'price': this.product.price
+      }).then(function (res) {
+        _this2.products.push(res.data.data);
+
+        _this2.product = '';
+
+        _this2.hideModal();
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    updateProduct: function updateProduct() {
+      var _this3 = this;
+
+      axios.put(_config__WEBPACK_IMPORTED_MODULE_0__["apiHost"] + 'products/' + this.product.id, {
+        'name': this.product.name,
+        'description': this.product.description,
+        'price': this.product.price
+      }).then(function (res) {
+        _this3.products.push(res.data.data);
+
+        _this3.hideModal();
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    deleteProduct: function deleteProduct() {
+      var _this4 = this;
+
+      axios["delete"](_config__WEBPACK_IMPORTED_MODULE_0__["apiHost"] + 'products/' + this.product.id).then(function (res) {
+        var vm = _this4;
+
+        var index = _this4.products.findIndex(function (prod) {
+          return prod.id == vm.product.id;
+        });
+
+        _this4.products.splice(index, 1);
+
+        _this4.hideModal();
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    hideModal: function hideModal() {
+      $('#createModal').modal('hide');
+      $('#deleteModal').modal('hide');
     }
   },
   created: function created() {
@@ -38297,55 +38463,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("nav", { staticClass: "site-header sticky-top py-1" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "container d-flex flex-column flex-md-row justify-content-between"
-          },
-          [
-            _c(
-              "a",
-              {
-                staticClass: "py-2",
-                attrs: { href: "#", "aria-label": "Product" }
-              },
-              [
-                _c(
-                  "svg",
-                  {
-                    staticClass: "d-block mx-auto",
-                    attrs: {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      width: "24",
-                      height: "24",
-                      fill: "none",
-                      stroke: "currentColor",
-                      "stroke-linecap": "round",
-                      "stroke-linejoin": "round",
-                      "stroke-width": "2",
-                      role: "img",
-                      viewBox: "0 0 24 24",
-                      focusable: "false"
-                    }
-                  },
-                  [
-                    _c("title", [_vm._v("Product")]),
-                    _c("circle", { attrs: { cx: "12", cy: "12", r: "10" } }),
-                    _c("path", {
-                      attrs: {
-                        d:
-                          "M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"
-                      }
-                    })
-                  ]
-                )
-              ]
-            )
-          ]
-        )
-      ]),
+      _vm._m(0),
       _vm._v(" "),
       _c(
         "transition",
@@ -38357,7 +38475,28 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("nav", { staticClass: "site-header sticky-top py-1" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "container d-flex flex-column flex-md-row justify-content-between"
+        },
+        [
+          _c("a", {
+            staticClass: "py-2",
+            attrs: { href: "#", "aria-label": "Product" }
+          })
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -38827,6 +38966,27 @@ var render = function() {
   return _c("div", [
     _vm._m(0),
     _vm._v(" "),
+    _c("section", { staticClass: "mb-3" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-2 offset-10" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { "data-target": "#createModal", "data-toggle": "modal" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.createProductModal()
+                }
+              }
+            },
+            [_vm._v("Nuevo Producto")]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("table", { staticClass: "table table-striped table-hover" }, [
         _vm._m(1),
@@ -38841,13 +39001,416 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(product.name))]),
               _vm._v(" "),
-              _c("td")
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: {
+                      "data-target": "#editModal",
+                      "data-toggle": "modal"
+                    },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.editProductModal(product)
+                      }
+                    }
+                  },
+                  [_vm._v("Editar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: {
+                      "data-target": "#deleteModal",
+                      "data-toggle": "modal"
+                    },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.openDeleteModal(product)
+                      }
+                    }
+                  },
+                  [_vm._v("Eliminar")]
+                )
+              ])
             ])
           }),
           0
         )
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "createModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "createModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    attrs: {
+                      method: "post",
+                      name: "createProduct",
+                      id: "createProduct",
+                      action: "#"
+                    },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.createProduct($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "title" } }, [
+                        _vm._v("Nombre")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.product.name,
+                            expression: "product.name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "name",
+                          id: "name-new",
+                          placeholder: "Nombre"
+                        },
+                        domProps: { value: _vm.product.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.product, "name", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "post_content" } }, [
+                        _vm._v("Descripción")
+                      ]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.product.description,
+                            expression: "product.description"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          name: "description",
+                          id: "description-new",
+                          placeholder: "Descripción"
+                        },
+                        domProps: { value: _vm.product.description },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.product,
+                              "description",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "email" } }, [
+                        _vm._v("Precio")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.product.price,
+                            expression: "product.price"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "number",
+                          name: "price",
+                          id: "price-new",
+                          placeholder: "Costo"
+                        },
+                        domProps: { value: _vm.product.price },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.product, "price", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group text-right" }, [
+                      _c("button", { staticClass: "btn btn-success" }, [
+                        _vm._v(_vm._s(_vm.messageStatusProduct))
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "editModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "editModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "form",
+                  {
+                    attrs: {
+                      method: "post",
+                      name: "updateProduct",
+                      id: "updateProduct",
+                      action: "#"
+                    },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.updateProduct($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "title" } }, [
+                        _vm._v("Nombre")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.product.name,
+                            expression: "product.name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "name",
+                          id: "name-update",
+                          placeholder: "Nombre"
+                        },
+                        domProps: { value: _vm.product.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.product, "name", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "post_content" } }, [
+                        _vm._v("Descripción")
+                      ]),
+                      _vm._v(" "),
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.product.description,
+                            expression: "product.description"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          name: "description",
+                          id: "description-update",
+                          placeholder: "Descripción"
+                        },
+                        domProps: { value: _vm.product.description },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.product,
+                              "description",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "email" } }, [
+                        _vm._v("Precio")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.product.price,
+                            expression: "product.price"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "number",
+                          name: "price",
+                          id: "price-update",
+                          placeholder: "Costo"
+                        },
+                        domProps: { value: _vm.product.price },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.product, "price", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group text-right" }, [
+                      _c("button", { staticClass: "btn btn-success" }, [
+                        _vm._v(_vm._s(_vm.messageStatusProduct))
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "deleteModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "deleteModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(4),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _vm._m(5),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group text-center" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      on: {
+                        click: function($event) {
+                          return _vm.hideModal()
+                        }
+                      }
+                    },
+                    [_vm._v("Cancel")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group text-center" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteProduct()
+                        }
+                      }
+                    },
+                    [_vm._v("Ok")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -38875,6 +39438,89 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col-1" } }, [_vm._v("Acciones")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "createModalLabel" } },
+        [_vm._v("Nuevo Producto")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "editModalLabel" } },
+        [_vm._v("Editar Producto")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "deleteModalLabel" } },
+        [_vm._v("Modal title")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("p", [_vm._v("Are you sure want to delete the record? ")])
     ])
   }
 ]
